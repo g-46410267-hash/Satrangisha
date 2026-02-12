@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>For Satrangisha ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  font-family:Poppins,sans-serif;
+  background:linear-gradient(135deg,#e7b6bf,#d88f9b);
+  overflow-x:hidden;
+  text-align:center;
+}
+
+/* FLOATING DECORATIONS */
+.floating{
+  position:fixed;
+  font-size:22px;
+  opacity:.35;
+  animation:float 16s linear infinite;
+  pointer-events:none;
+}
+@keyframes float{
+  from{transform:translateY(110vh);} 
+  to{transform:translateY(-20vh);} 
+}
+
+/* BUTTONS */
+button{
+  padding:14px 28px;
+  border:none;
+  border-radius:30px;
+  margin:10px;
+  font-size:18px;
+  cursor:pointer;
+  transition: top 0.3s ease, left 0.3s ease, opacity 0.3s ease;
+}
+
+#yes{background:#ff4d6d;color:white;box-shadow:0 8px 18px rgba(0,0,0,.25);} 
+#no{background:white;color:#ff4d6d;}
+
+/* FLEX CONTAINER FOR BUTTONS */
+.button-container{
+  display:flex;
+  gap:15px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+/* CENTERED SECTIONS */
+#start, #celebrate{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  height:100vh; /* full screen */
+  padding:20px;
+}
+
+#start h1, #celebrate h1{
+  font-size:3rem;
+  font-weight:700;
+  color:#fff;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+  margin-bottom:30px;
+}
+
+@media(max-width:480px){
+  #start h1, #celebrate h1{
+    font-size:2rem;
+  }
+  button{
+    padding:12px 24px;
+    font-size:16px;
+  }
+}
+
+/* FIREWORKS */
+.firework{
+  position:fixed;
+  width:6px;height:6px;
+  border-radius:50%;
+  background:white;
+  animation:explode 1.2s ease-out forwards;
+}
+@keyframes explode{
+  0%{transform:scale(1);opacity:1;}
+  100%{transform:scale(18);opacity:0;}
+}
+
+/* LOVE LETTER PROMPT */
+#openPrompt{
+  display:none;
+  margin-top:30vh;
+  opacity:0;
+}
+
+.letterBtn{
+  background:#ff4d6d;
+  color:white;
+  padding:16px 30px;
+  border-radius:40px;
+  font-size:20px;
+  box-shadow:0 12px 28px rgba(0,0,0,.25);
+  animation:pulse 1.5s infinite;
+  cursor:pointer;
+}
+
+@keyframes pulse{
+  0%,100%{transform:scale(1);} 
+  50%{transform:scale(1.08);} 
+}
+
+/* fade & slide animations */
+@keyframes slideUp{
+  0%{opacity:0; transform:translateY(30px);}
+  100%{opacity:1; transform:translateY(0);}
+}
+
+@keyframes fadeOut{
+  0%{opacity:1;}
+  100%{opacity:0;}
+}
+
+/* LETTER PAGE */
+#letterSection{
+  display:none;
+  padding:30px 0;
+  opacity:0;
+  transform:translateY(30px);
+}
+
+.slide-up{
+  animation:slideUp 0.5s ease-out forwards;
+}
+
+.letter{
+  max-width:620px;
+  width:72vw;
+  margin:0 auto;
+  padding:28px 26px;
+  background:#f4f1f1;
+  border-radius:26px;
+  line-height:1.75;
+  font-size:18px;
+  text-align:left;
+  box-shadow:0 10px 35px rgba(0,0,0,.18);
+}
+
+/* FLOATING PHOTOS — BOTTOM WAVE WITH FADE */
+.photo{
+  position:fixed;
+  bottom:10px;
+  width:26vw;
+  max-width:160px;
+  border-radius:16px;
+  box-shadow:0 12px 28px rgba(0,0,0,.35);
+  display:none;
+  animation-name:driftWave, fadeInOut;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes driftWave{
+  0%{transform:translateX(0) translateY(0);}
+  25%{transform:translateX(12px) translateY(-5px);}
+  50%{transform:translateX(25px) translateY(0);}
+  75%{transform:translateX(12px) translateY(5px);}
+  100%{transform:translateX(0) translateY(0);}
+}
+
+@keyframes fadeInOut{
+  0%,100%{opacity:0.7;}
+  50%{opacity:1;}
+}
+
+#p1{left:5%; animation-duration:11s, 8s;}
+#p2{left:38%; animation-duration:13s, 9s;}
+#p3{left:70%; animation-duration:15s, 10s;}
+
+@media(max-width:480px){
+  .letter{width:74vw;font-size:17px;padding:22px;border-radius:22px;}
+  .photo{width:28vw;}
+}
+</style>
+</head>
+<body>
+
+<audio id="bgm" autoplay muted loop>
+<source src="i-wanna-be-yours.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Floating decorations -->
+<div class="floating" style="left:8%">🌹</div>
+<div class="floating" style="left:28%;animation-delay:4s">❤️</div>
+<div class="floating" style="left:52%;animation-delay:7s">🌸</div>
+<div class="floating" style="left:72%;animation-delay:10s">✨</div>
+<div class="floating" style="left:88%;animation-delay:13s">💖</div>
+
+<div id="start">
+<h1>Babygirl… Will you be my Valentine? ❤️</h1>
+<div class="button-container">
+  <button id="yes" onclick="yesClick()">Yes 💖</button>
+  <button id="no" onmouseover="moveNo()">No 🙈</button>
+</div>
+</div>
+
+<div id="celebrate" style="display:none">
+<h1>YAYYYY BEST DECISION EVER ❤️</h1>
+</div>
+
+<div id="openPrompt">
+<h2>Click to open your love letter 💌</h2>
+<button class="letterBtn" onclick="openLetter()">Open Love Letter</button>
+</div>
+
+<div id="letterSection">
+<img src="photo1.jpg" class="photo" id="p1" alt="Photo 1">
+<img src="photo2.jpg" class="photo" id="p2" alt="Photo 2">
+<img src="photo3.jpg" class="photo" id="p3" alt="Photo 3">
+
+<div class="letter">
+<strong>My dearest Satrangisha,</strong><br><br>
+
+It still amazes me how love can remain so close even when life keeps us miles apart. Twenty-eight months without seeing you sounds like distance on paper, but my heart has never really learned how to be away from yours. If anything, this time has only made one truth clearer to me — it has always been you.<br><br>
+
+Six years of knowing you, growing with you, facing life’s unexpected challenges together… it hasn’t been easy. We didn’t get the simple love story, but let’s face it — it’s always been nothing short of cinematic. Like those Mani Ratnam films you adore — sometimes quiet, sometimes chaotic, yet always deeply real.<br><br>
+
+No matter the lifetime, fate will always lead me back to you. In every universe, every lifetime, I will always search for you… and always choose you.<br><br>
+
+I love you more than anything in this world. There has never been another option for me. No second thought. No alternate path. Just you — always you.<br><br>
+
+One day these obstacles will end. The distance will close. And we’ll finally step into that light together, knowing we never let go.<br><br>
+
+Always yours. Always choosing you.<br>
+Happy Valentine’s Day ❤️
+</div>
+</div>
+
+<script>
+const audio=document.getElementById('bgm');
+
+document.body.addEventListener('click',()=>{
+ audio.muted=false;
+ audio.play().catch(()=>{});
+},{once:true});
+
+function moveNo(){
+ const btn=document.getElementById('no');
+ const responses=["Hey 😤 why no?","Try again 😂","You sure ah?","Cannot escape love 😏"];
+ btn.innerText=responses[Math.floor(Math.random()*responses.length)];
+ btn.style.top=Math.random()*window.innerHeight+'px';
+ btn.style.left=Math.random()*window.innerWidth+'px';
+}
+
+function fireworks(){
+ for(let i=0;i<25;i++){
+   const f=document.createElement('div');
+   f.className='firework';
+   f.style.top=Math.random()*100+'%';
+   f.style.left=Math.random()*100+'%';
+   document.body.appendChild(f);
+   setTimeout(()=>f.remove(),1200);
+ }
+}
+
+function yesClick(){
+ document.getElementById('start').style.display='none';
+ document.getElementById('celebrate').style.display='block';
+ fireworks();
+ setTimeout(()=>{
+  document.getElementById('celebrate').style.display='none';
+  const openPrompt = document.getElementById('openPrompt');
+  openPrompt.style.display='block';
+  openPrompt.classList.add('slide-up');
+ },2200);
+}
+
+function openLetter(){
+ const openPrompt = document.getElementById('openPrompt');
+ openPrompt.style.animation = "fadeOut 0.3s forwards";
+ setTimeout(()=>{
+   openPrompt.style.display = "none";
+   const letterSection = document.getElementById('letterSection');
+   letterSection.style.display='block';
+   letterSection.classList.add('slide-up');
+   document.querySelectorAll('.photo').forEach(p=>p.style.display='block');
+ },300);
+}
+</script>
+
+</body>
+</html>
