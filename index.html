@@ -157,9 +157,9 @@ button{
   box-shadow:0 20px 40px rgba(0,0,0,.3);
 }
 
-/* FLOATING PHOTOS — RANDOM MOVEMENT + FADE + BREATHING */
+/* FLOATING PHOTOS — ABSOLUTE START, RANDOM MOVEMENT + FADE + BREATHING */
 .photo{
-  position:fixed;
+  position:absolute; /* absolute so initial position works */
   width:26vw;
   max-width:160px;
   border-radius:16px;
@@ -276,15 +276,13 @@ function openLetter(){
    letterSection.style.display='block';
    letterSection.classList.add('slide-up');
 
-   // Show photos with random initial positions
+   // Show photos with random absolute positions and start movement
    const photos = document.querySelectorAll('.photo');
    photos.forEach(p=>{
      const vw = window.innerWidth - p.offsetWidth;
      const vh = window.innerHeight - p.offsetHeight;
-     const x = Math.random() * vw;
-     const y = Math.random() * vh;
-     const scale = 1 + Math.random()*0.08;
-     p.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+     p.style.left = `${Math.random() * vw}px`;
+     p.style.top = `${Math.random() * vh}px`;
      p.style.display='block';
      randomMove(p);
    });
@@ -297,11 +295,19 @@ function randomMove(el){
   const vh = window.innerHeight - el.offsetHeight;
   const x = Math.random() * vw;
   const y = Math.random() * vh;
-  const scale = 1 + Math.random()*0.08;
-  const duration = 4 + Math.random()*3; // 4-7s
+  const scale = 1 + Math.random() * 0.08;
+  const duration = 4 + Math.random() * 3; // 4-7s per move
+
   el.style.transition = `transform ${duration}s ease-in-out`;
-  el.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
-  setTimeout(()=>randomMove(el), duration*1000);
+  el.style.transform = `translate(${x - parseFloat(el.style.left)}px, ${y - parseFloat(el.style.top)}px) scale(${scale})`;
+
+  setTimeout(() => {
+    // Update absolute position for next move
+    el.style.left = `${x}px`;
+    el.style.top = `${y}px`;
+    el.style.transform = `scale(${scale})`; // reset transform relative to new position
+    randomMove(el);
+  }, duration*1000);
 }
 </script>
 
