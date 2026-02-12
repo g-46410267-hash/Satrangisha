@@ -14,6 +14,7 @@ body{
   background:linear-gradient(135deg,#e7b6bf,#d88f9b);
   overflow-x:hidden;
   text-align:center;
+  position:relative;
 }
 
 /* FLOATING DECORATIONS */
@@ -23,6 +24,7 @@ body{
   opacity:.35;
   animation:float 16s linear infinite;
   pointer-events:none;
+  z-index:5;
 }
 @keyframes float{
   from{transform:translateY(110vh);} 
@@ -57,7 +59,7 @@ button{
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  height:100vh; /* full screen */
+  height:100vh;
   padding:20px;
 }
 
@@ -86,6 +88,7 @@ button{
   border-radius:50%;
   background:white;
   animation:explode 1.2s ease-out forwards;
+  z-index:4;
 }
 @keyframes explode{
   0%{transform:scale(1);opacity:1;}
@@ -97,6 +100,7 @@ button{
   display:none;
   margin-top:30vh;
   opacity:0;
+  z-index:6;
 }
 
 .letterBtn{
@@ -132,6 +136,8 @@ button{
   padding:30px 0;
   opacity:0;
   transform:translateY(30px);
+  position:relative;
+  z-index:10; /* above floating photos */
 }
 
 .slide-up{
@@ -148,39 +154,30 @@ button{
   line-height:1.75;
   font-size:18px;
   text-align:left;
-  box-shadow:0 10px 35px rgba(0,0,0,.18);
+  box-shadow:0 20px 40px rgba(0,0,0,.3);
 }
 
-/* FLOATING PHOTOS — BOTTOM WAVE WITH FADE */
+/* FLOATING PHOTOS — RANDOM MOVEMENT + FADE + BREATHING */
 .photo{
   position:fixed;
-  bottom:10px;
   width:26vw;
   max-width:160px;
   border-radius:16px;
-  box-shadow:0 12px 28px rgba(0,0,0,.35);
+  box-shadow:0 12px 28px rgba(0,0,0,.25);
   display:none;
-  animation-name:driftWave, fadeInOut;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-}
-
-@keyframes driftWave{
-  0%{transform:translateX(0) translateY(0);}
-  25%{transform:translateX(12px) translateY(-5px);}
-  50%{transform:translateX(25px) translateY(0);}
-  75%{transform:translateX(12px) translateY(5px);}
-  100%{transform:translateX(0) translateY(0);}
+  animation:fadeInOut 4s ease-in-out infinite alternate, breathe 3s ease-in-out infinite alternate;
+  z-index:1; /* behind letter */
 }
 
 @keyframes fadeInOut{
-  0%,100%{opacity:0.7;}
+  0%,100%{opacity:0.6;}
   50%{opacity:1;}
 }
 
-#p1{left:5%; animation-duration:11s, 8s;}
-#p2{left:38%; animation-duration:13s, 9s;}
-#p3{left:70%; animation-duration:15s, 10s;}
+@keyframes breathe{
+  0%,100%{transform: scale(1);}
+  50%{transform: scale(1.08);}
+}
 
 @media(max-width:480px){
   .letter{width:74vw;font-size:17px;padding:22px;border-radius:22px;}
@@ -225,17 +222,11 @@ button{
 
 <div class="letter">
 <strong>My dearest Satrangisha,</strong><br><br>
-
 It still amazes me how love can remain so close even when life keeps us miles apart. Twenty-eight months without seeing you sounds like distance on paper, but my heart has never really learned how to be away from yours. If anything, this time has only made one truth clearer to me — it has always been you.<br><br>
-
 Six years of knowing you, growing with you, facing life’s unexpected challenges together… it hasn’t been easy. We didn’t get the simple love story, but let’s face it — it’s always been nothing short of cinematic. Like those Mani Ratnam films you adore — sometimes quiet, sometimes chaotic, yet always deeply real.<br><br>
-
 No matter the lifetime, fate will always lead me back to you. In every universe, every lifetime, I will always search for you… and always choose you.<br><br>
-
 I love you more than anything in this world. There has never been another option for me. No second thought. No alternate path. Just you — always you.<br><br>
-
 One day these obstacles will end. The distance will close. And we’ll finally step into that light together, knowing we never let go.<br><br>
-
 Always yours. Always choosing you.<br>
 Happy Valentine’s Day ❤️
 </div>
@@ -243,11 +234,7 @@ Happy Valentine’s Day ❤️
 
 <script>
 const audio=document.getElementById('bgm');
-
-document.body.addEventListener('click',()=>{
- audio.muted=false;
- audio.play().catch(()=>{});
-},{once:true});
+document.body.addEventListener('click',()=>{ audio.muted=false; audio.play().catch(()=>{}); },{once:true});
 
 function moveNo(){
  const btn=document.getElementById('no');
@@ -288,8 +275,33 @@ function openLetter(){
    const letterSection = document.getElementById('letterSection');
    letterSection.style.display='block';
    letterSection.classList.add('slide-up');
-   document.querySelectorAll('.photo').forEach(p=>p.style.display='block');
+
+   // Show photos with random initial positions
+   const photos = document.querySelectorAll('.photo');
+   photos.forEach(p=>{
+     const vw = window.innerWidth - p.offsetWidth;
+     const vh = window.innerHeight - p.offsetHeight;
+     const x = Math.random() * vw;
+     const y = Math.random() * vh;
+     const scale = 1 + Math.random()*0.08;
+     p.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+     p.style.display='block';
+     randomMove(p);
+   });
  },300);
+}
+
+// Random movement function for photos
+function randomMove(el){
+  const vw = window.innerWidth - el.offsetWidth;
+  const vh = window.innerHeight - el.offsetHeight;
+  const x = Math.random() * vw;
+  const y = Math.random() * vh;
+  const scale = 1 + Math.random()*0.08;
+  const duration = 4 + Math.random()*3; // 4-7s
+  el.style.transition = `transform ${duration}s ease-in-out`;
+  el.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+  setTimeout(()=>randomMove(el), duration*1000);
 }
 </script>
 
